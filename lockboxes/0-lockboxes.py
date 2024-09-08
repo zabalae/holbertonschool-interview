@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-def canUnlockAll(boxes):
-    '''
+'''
     Determines if all the boxes can be unlocked.
 
     A box can be unlocked if you have a key that corresponds to its index.
@@ -17,6 +16,7 @@ def canUnlockAll(boxes):
     Returns:
         bool: True if all boxes can be unlocked, False otherwise.
     '''
+def canUnlockAll(boxes):
     n = len(boxes)
     unlocked = [False] * n
     unlocked[0] = True
