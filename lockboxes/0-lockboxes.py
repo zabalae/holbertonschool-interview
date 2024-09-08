@@ -15,7 +15,8 @@ def canUnlockAll(boxes):
                                are the keys to other boxes.
 
     Returns:
-        bool: True if all boxes can be unlocked, False otherwise."""
+        bool: True if all boxes can be unlocked, False otherwise.
+    """
     n = len(boxes)
     unlocked = [False] * n
     unlocked[0] = True
