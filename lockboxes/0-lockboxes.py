@@ -10,12 +10,14 @@
     Args:
         boxes (list of lists): A list of boxes, where each box is represented
                                as a list of keys. The index of each sublist
-                               represents a box, and the elements of the sublist
-                               are the keys to other boxes.
+                               represents a box, and the elements of the 
+                               sublist are the keys to other boxes.
 
     Returns:
         bool: True if all boxes can be unlocked, False otherwise.
     '''
+
+
 def canUnlockAll(boxes):
     n = len(boxes)
     unlocked = [False] * n
