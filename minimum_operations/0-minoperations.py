@@ -7,10 +7,10 @@ operations needed to achieve exactly n H characters.
 def minOperations(n):
     """
     Calculates the minimum number of operations needed to reach n H characters.
-    
+
     Args:
     n (int): The target number of H characters.
-    
+
     Returns:
     int: The fewest number of operations needed, or 0 if n is impossible.
     """
