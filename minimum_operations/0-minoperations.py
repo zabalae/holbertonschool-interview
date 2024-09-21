@@ -4,6 +4,7 @@ This module defines a function that calculates the minimum number of
 operations needed to achieve exactly n H characters.
 """
 
+
 def minOperations(n):
     """
     Calculates the minimum number of operations needed to reach n H characters.
