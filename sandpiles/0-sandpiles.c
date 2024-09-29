@@ -1,7 +1,4 @@
-#include <stdio.h>
 #include "sandpiles.h"
-
-void print_grid(int grid[3][3]);
 
 /**
  * sandpiles_sum - Computes the sum of two sandpiles and stabilizes the result
@@ -85,7 +82,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
  * print_grid - Prints a 3x3 grid
  * @grid: The grid to print
  */
-void print_grid(int grid[3][3])
+static void print_grid(int grid[3][3])
 {
     int i, j;
 
