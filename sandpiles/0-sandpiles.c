@@ -42,7 +42,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
         if (unstable)
         {
             printf("=\n");
-            print_grid(grid1);
+            print_grid(grid1);  /* This will use the print_grid function from main_0.c */
 
             /* Perform the toppling */
             int tmp[3][3] = {0}; /* Temp grid to store the toppling results */
@@ -76,24 +76,4 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
             }
         }
     } while (unstable);
-}
-
-/**
- * print_grid - Prints a 3x3 grid
- * @grid: The grid to print
- */
-static void print_grid(int grid[3][3])
-{
-    int i, j;
-
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (j)
-                printf(" ");
-            printf("%d", grid[i][j]);
-        }
-        printf("\n");
-    }
 }
