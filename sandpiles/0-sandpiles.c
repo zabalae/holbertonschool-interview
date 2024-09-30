@@ -31,16 +31,16 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
                 if (grid1[i][j] > 3)
                 {
                     unstable = 1;
-                    break;
                 }
             }
-            if (unstable)
-                break;
         }
 
         /* If unstable, perform the toppling */
         if (unstable)
         {
+            printf("=\n");
+            print_grid(grid1);  /* Use the external print_grid */
+
             /* Perform the toppling */
             int tmp[3][3] = {0}; /* Temp grid to store the toppling results */
 
@@ -72,5 +72,6 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
                 }
             }
         }
+
     } while (unstable);
 }
