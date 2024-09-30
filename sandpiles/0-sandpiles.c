@@ -1,8 +1,5 @@
 #include "sandpiles.h"
 
-/* Forward declaration of print_grid */
-void print_grid(int grid[3][3]);
-
 /**
  * sandpiles_sum - Computes the sum of two sandpiles and stabilizes the result
  * @grid1: First 3x3 sandpile (will hold the result)
@@ -41,12 +38,9 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
                 break;
         }
 
-        /* If unstable, print the grid */
+        /* If unstable, perform the toppling */
         if (unstable)
         {
-            printf("=\n");
-            print_grid(grid1);  /* This will use the print_grid function from main_0.c */
-
             /* Perform the toppling */
             int tmp[3][3] = {0}; /* Temp grid to store the toppling results */
 
