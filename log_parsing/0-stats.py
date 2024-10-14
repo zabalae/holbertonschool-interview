@@ -23,12 +23,12 @@ How to run:
 import sys
 import signal
 
-
 # Declare global variables before modifying them
 global total_size
 global line_count
 
 # Initialize global variables for total file size and status code counts
+total_size = 0  # Tracks the total size of all file sizes in the logs
 status_counts = {  # Tracks occurrences of specific HTTP status codes
     200: 0,
     301: 0,
@@ -40,7 +40,6 @@ status_counts = {  # Tracks occurrences of specific HTTP status codes
     500: 0
 }
 line_count = 0  # Keeps track of how many lines have been processed
-total_size = 0  # Tracks the total size of all file sizes in the logs
 
 
 def print_stats():
@@ -74,42 +73,43 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 # Main execution loop to process lines from standard input
-try:
-    for line in sys.stdin:
-        try:
-            # Split the log line by whitespace to parse its components
-            parts = line.split()
-            
-            # Ensure the line follows the expected format by checking part count
-            if len(parts) < 7:
-                continue  # Skip lines that don't match the format
+if __name__ == "__main__":
+    try:
+        for line in sys.stdin:
+            try:
+                # Split the log line by whitespace to parse its components
+                parts = line.split()
 
-            # Extract necessary fields from the log line
-            ip = parts[0]  # IP address
-            date = parts[3] + " " + parts[4]  # Date field
-            request = parts[5] + " " + parts[6] + " " + parts[7]  # HTTP request
-            status_code = int(parts[8])  # Status code (should be an integer)
-            file_size = int(parts[9])  # File size (should be an integer)
+                # Ensure the line follows the expected format by checking part count
+                if len(parts) < 7:
+                    continue  # Skip lines that don't match the format
 
-            # Update the total file size
-            total_size += file_size
+                # Extract necessary fields from the log line
+                ip = parts[0]  # IP address
+                date = parts[3] + " " + parts[4]  # Date field
+                request = parts[5] + " " + parts[6] + " " + parts[7]  # HTTP request
+                status_code = int(parts[8])  # Status code (should be an integer)
+                file_size = int(parts[9])  # File size (should be an integer)
 
-            # Update the count of the status code if it's in the expected set
-            if status_code in status_counts:
-                status_counts[status_code] += 1
+                # Update the total file size
+                total_size += file_size
 
-            # Increment the line counter
-            line_count += 1
+                # Update the count of the status code if it's in the expected set
+                if status_code in status_counts:
+                    status_counts[status_code] += 1
 
-            # Print stats every 10 lines
-            if line_count % 10 == 0:
-                print_stats()
+                # Increment the line counter
+                line_count += 1
 
-        except Exception:
-            # If an error occurs (e.g., invalid line format), skip the line
-            continue
+                # Print stats every 10 lines
+                if line_count % 10 == 0:
+                    print_stats()
 
-except KeyboardInterrupt:
-    # If the script is interrupted by a keyboard interrupt, print the final stats
-    print_stats()
-    sys.exit(0)
+            except Exception:
+                # If an error occurs (e.g., invalid line format), skip the line
+                continue
+
+    except KeyboardInterrupt:
+        # If the script is interrupted by a keyboard interrupt, print the final stats
+        print_stats()
+        sys.exit(0)
