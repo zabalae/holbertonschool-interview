@@ -23,8 +23,12 @@ How to run:
 import sys
 import signal
 
+
+# Declare global variables before modifying them
+global total_size
+global line_count
+
 # Initialize global variables for total file size and status code counts
-total_size = 0  # Tracks the total size of all file sizes in the logs
 status_counts = {  # Tracks occurrences of specific HTTP status codes
     200: 0,
     301: 0,
@@ -36,6 +40,7 @@ status_counts = {  # Tracks occurrences of specific HTTP status codes
     500: 0
 }
 line_count = 0  # Keeps track of how many lines have been processed
+total_size = 0  # Tracks the total size of all file sizes in the logs
 
 
 def print_stats():
@@ -85,10 +90,6 @@ try:
             request = parts[5] + " " + parts[6] + " " + parts[7]  # HTTP request
             status_code = int(parts[8])  # Status code (should be an integer)
             file_size = int(parts[9])  # File size (should be an integer)
-
-            # Declare global variables before modifying them
-            global total_size
-            global line_count
 
             # Update the total file size
             total_size += file_size
