@@ -5,7 +5,7 @@ Log Parsing Script
 This script reads log entries from standard input, processes them line by line, 
 and computes metrics such as total file size and counts of HTTP status codes.
 The log format is expected to follow the format:
-<IP Address> - [<date>] "GET /projects/260 HTTP/1.1"<status code> <file size>
+<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
 
 - After every 10 lines of input, the script outputs the current statistics.
 - It also outputs statistics if interrupted with CTRL+C (SIGINT).
@@ -23,9 +23,11 @@ How to run:
 import sys
 import signal
 
+
 # Declare global variables before modifying them
 global total_size
 global line_count
+
 
 # Initialize global variables for total file size and status code counts
 total_size = 0  # Tracks the total size of all file sizes in the logs
@@ -101,13 +103,12 @@ if __name__ == "__main__":
                 # Increment the line counter
                 line_count += 1
 
-                # Print stats every 10 lines
-                if line_count % 10 == 0:
-                    print_stats()
-
             except Exception:
                 # If an error occurs (e.g., invalid line format), skip the line
                 continue
+
+        # Print stats after reading all input
+        print_stats()
 
     except KeyboardInterrupt:
         # If the script is interrupted by a keyboard interrupt, print the final stats
