@@ -22,6 +22,7 @@ How to run:
 
 import sys
 import signal
+import re
 
 
 # Declare global variables before modifying them
@@ -42,6 +43,9 @@ status_counts = {  # Tracks occurrences of specific HTTP status codes
     500: 0
 }
 line_count = 0  # Keeps track of how many lines have been processed
+
+# Regular expression to match the log format
+log_pattern = re.compile(r'^(\S+) - \[(.*?)\] "GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$')
 
 
 def print_stats():
@@ -79,19 +83,16 @@ if __name__ == "__main__":
     try:
         for line in sys.stdin:
             try:
-                # Split the log line by whitespace to parse its components
-                parts = line.split()
-
-                # Ensure the line follows the expected format by checking part count
-                if len(parts) < 7:
+                # Match the log line using the regular expression
+                match = log_pattern.match(line.strip())
+                if not match:
                     continue  # Skip lines that don't match the format
 
-                # Extract necessary fields from the log line
-                ip = parts[0]  # IP address
-                date = parts[3] + " " + parts[4]  # Date field
-                request = parts[5] + " " + parts[6] + " " + parts[7]  # HTTP request
-                status_code = int(parts[8])  # Status code (should be an integer)
-                file_size = int(parts[9])  # File size (should be an integer)
+                # Extract the relevant fields from the matched groups
+                ip = match.group(1)
+                date = match.group(2)
+                status_code = int(match.group(3))
+                file_size = int(match.group(4))
 
                 # Update the total file size
                 total_size += file_size
