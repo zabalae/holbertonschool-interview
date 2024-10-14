@@ -5,7 +5,7 @@ Log Parsing Script
 This script reads log entries from standard input, processes them line by line, 
 and computes metrics such as total file size and counts of HTTP status codes.
 The log format is expected to follow the format:
-<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
+<IP Address> - [<date>] "GET /projects/260 HTTP/1.1"<status code> <file size>
 
 - After every 10 lines of input, the script outputs the current statistics.
 - It also outputs statistics if interrupted with CTRL+C (SIGINT).
