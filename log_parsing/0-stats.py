@@ -24,11 +24,9 @@ import sys
 import signal
 import re
 
-
 # Declare global variables before modifying them
 global total_size
 global line_count
-
 
 # Initialize global variables for total file size and status code counts
 total_size = 0  # Tracks the total size of all file sizes in the logs
@@ -83,9 +81,13 @@ if __name__ == "__main__":
     try:
         for line in sys.stdin:
             try:
+                # Print the raw input line for debugging purposes
+                print(f"Raw input: {line.strip()}")
+
                 # Match the log line using the regular expression
                 match = log_pattern.match(line.strip())
                 if not match:
+                    print(f"Line did not match the pattern: {line.strip()}")
                     continue  # Skip lines that don't match the format
 
                 # Extract the relevant fields from the matched groups
@@ -93,6 +95,9 @@ if __name__ == "__main__":
                 date = match.group(2)
                 status_code = int(match.group(3))
                 file_size = int(match.group(4))
+
+                # Print the extracted values for debugging purposes
+                print(f"Extracted IP: {ip}, Date: {date}, Status Code: {status_code}, File Size: {file_size}")
 
                 # Update the total file size
                 total_size += file_size
@@ -104,8 +109,9 @@ if __name__ == "__main__":
                 # Increment the line counter
                 line_count += 1
 
-            except Exception:
-                # If an error occurs (e.g., invalid line format), skip the line
+            except Exception as e:
+                # Print the error for debugging purposes
+                print(f"Error processing line: {line.strip()}, Error: {e}")
                 continue
 
         # Print stats after reading all input
