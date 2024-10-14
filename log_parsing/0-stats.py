@@ -23,7 +23,6 @@ How to run:
 import sys
 import signal
 
-
 # Initialize global variables for total file size and status code counts
 total_size = 0  # Tracks the total size of all file sizes in the logs
 status_counts = {  # Tracks occurrences of specific HTTP status codes
@@ -36,7 +35,6 @@ status_counts = {  # Tracks occurrences of specific HTTP status codes
     405: 0,
     500: 0
 }
-
 line_count = 0  # Keeps track of how many lines have been processed
 
 
@@ -88,8 +86,11 @@ try:
             status_code = int(parts[8])  # Status code (should be an integer)
             file_size = int(parts[9])  # File size (should be an integer)
 
-            # Update the total file size
+            # Declare global variables before modifying them
             global total_size
+            global line_count
+
+            # Update the total file size
             total_size += file_size
 
             # Update the count of the status code if it's in the expected set
@@ -97,7 +98,6 @@ try:
                 status_counts[status_code] += 1
 
             # Increment the line counter
-            global line_count
             line_count += 1
 
             # Print stats every 10 lines
