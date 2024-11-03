@@ -4,9 +4,8 @@
 
 
 def validUTF8(data):
-    '''
-    Method that determines if a given data set represents a valid UTF-8 encoding
-    '''
+    '''Method that determines if a given data set represents
+    a valid UTF-8 encoding'''
     if not (type(data) is list and all([isinstance(n, int) for n in data])):
         return False
 
