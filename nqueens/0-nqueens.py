@@ -1,85 +1,60 @@
 #!/usr/bin/python3
-'''
-Module that solves the N queens problem
-'''
+"""
+Method that solves the N queens problem
+"""
+
 import sys
 
 
-def board_set_up(N):
-    """
-    Sets up blank NxN chessboard
-    """
-    matrix = []
-    for row in range(N):
-        matrix_row = []
-        for column in range(N):
-            matrix_row.append(0)
-        matrix.append(matrix_row)
-    return (matrix)
+def solve(row, column):
+    solver = [[]]
+    for q in range(row):
+        solver = place_queen(q, column, solver)
+    return solver
 
 
-def print_solution(matrix):
-    """
-    Prints the coordinates where there is a queen
-    """
-    queens_coordinates = []
-    for i, row in enumerate(matrix):
-        for j, column in enumerate(row):
-            if column == 1:
-                queen = []
-                queen.append(i)
-                queen.append(j)
-                queens_coordinates.append(queen)
-    print(queens_coordinates)
+def place_queen(q, column, prev_solver):
+    solver_queen = []
+    for array in prev_solver:
+        for x in range(column):
+            if is_safe(q, x, array):
+                solver_queen.append(array + [x])
+    return solver_queen
 
 
-def is_safe(matrix, new_row, new_column):
-    """
-    Determines if a queen is safe to be put in new_row, new_column
-    """
-    for i in range(new_column):
-        if matrix[new_row][i]:
-            return False
-    for i, j in zip(range(new_row, -1, -1),
-                    range(new_column, -1, -1)):
-        if matrix[i][j]:
-            return False
-    N = len(matrix)
-    for i, j in zip(range(new_row, N, 1),
-                    range(new_column, -1, -1)):
-        if matrix[i][j]:
-            return False
-    return True
+def is_safe(q, x, array):
+    if x in array:
+        return (False)
+    else:
+        return all(abs(array[column] - x) != q - column
+                   for column in range(q))
 
 
-def solve(matrix, new_column):
-    """
-    Recursively solves the N Queens puzzle
-    """
-    N = len(matrix)
-    if new_column >= N:
-        print_solution(matrix)
-        return matrix
-    for new_row in range(N):
-        if is_safe(matrix, new_row, new_column):
-            matrix[new_row][new_column] = 1
-            solve(matrix, new_column + 1)
-            matrix[new_row][new_column] = 0
-    return None
-
-
-if __name__ == "__main__":
+def init():
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
-        exit(1)
-    N = sys.argv[1]
-    try:
-        N = int(N)
-    except Exception as e:
+        sys.exit(1)
+    if sys.argv[1].isdigit():
+        the_queen = int(sys.argv[1])
+    else:
         print("N must be a number")
-        exit(1)
-    if N < 4:
+        sys.exit(1)
+    if the_queen < 4:
         print("N must be at least 4")
-        exit(1)
-    matrix = board_set_up(N)
-    solve(matrix, 0)
+        sys.exit(1)
+    return(the_queen)
+
+
+def n_queens():
+
+    the_queen = init()
+    solver = solve(the_queen, the_queen)
+    for array in solver:
+        clean = []
+        for q, x in enumerate(array):
+            clean.append([q, x])
+        print(clean)
+
+
+if __name__ == '__main__':
+    n_queens()
